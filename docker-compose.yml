@@ -1,0 +1,39 @@
+version: '3.2'
+services:
+  kitchen:
+    build:
+      context: kitchen/
+      dockerfile: src/main/docker/Dockerfile.jvm
+    image: kitchen
+    ports:
+      - "8083:8083"
+    networks:
+      kitchen-network:
+        ipv4_address: 10.5.0.7
+
+
+  order:
+    build:
+      context: order/
+      dockerfile: src/main/docker/Dockerfile.jvm
+    image: order
+    ports:
+      - "8081:8081"
+    networks:
+      kitchen-network:
+        ipv4_address: 10.5.0.5
+  shelf:
+    build:
+      context: shelf/
+      dockerfile: src/main/docker/Dockerfile.jvm
+    image: shelf
+    ports:
+      - "8082:8082"
+    networks:
+      kitchen-network:
+        ipv4_address: 10.5.0.6
+
+networks:
+  kitchen-network:
+    external:
+        name: local_network_dev
