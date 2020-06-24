@@ -13,21 +13,6 @@ You need to have the following tools installed.
 - factory
 - monolith
 
-### Pre-operation
-
-##### Instance postgreSQL
-```
-docker run -d --name my_postgres -e  POSTGRES_PASSWORD=admin -it -p 5432:5432 quay.io/brex/postgres:10
-
-```
-##### Create database
-```
-psql -c 'CREATE DATABASE factorydb'
-psql -c 'CREATE DATABASE orderdb'
-psql -c 'CREATE DATABASE deliverydb'
-psql -c 'CREATE DATABASE monolithdb'
-```
-
 ### How to Run on microservices model
 steps
 
