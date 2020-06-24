@@ -1,14 +1,22 @@
 version: '3.2'
 services:
-  kitchen:
+  database:
+    image: quay.io/xiabai/postgres:latest
+    ports:
+      - "5432:5432"
+    networks:
+      factory-network:
+        ipv4_address: 10.5.0.11
+
+  factory:
     build:
-      context: kitchen/
+      context: factory/
       dockerfile: src/main/docker/Dockerfile.jvm
-    image: kitchen
+    image: factory
     ports:
       - "8083:8083"
     networks:
-      kitchen-network:
+      factory-network:
         ipv4_address: 10.5.0.7
 
 
@@ -20,20 +28,20 @@ services:
     ports:
       - "8081:8081"
     networks:
-      kitchen-network:
+      factory-network:
         ipv4_address: 10.5.0.5
-  shelf:
+  delivery:
     build:
-      context: shelf/
+      context: delivery/
       dockerfile: src/main/docker/Dockerfile.jvm
-    image: shelf
+    image: delivery
     ports:
       - "8082:8082"
     networks:
-      kitchen-network:
+      factory-network:
         ipv4_address: 10.5.0.6
 
 networks:
-  kitchen-network:
+  factory-network:
     external:
         name: local_network_dev
